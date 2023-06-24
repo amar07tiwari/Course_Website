@@ -1,23 +1,52 @@
-import logo from './logo.svg';
+import React,{useState} from'react';
+import { useEffect } from 'react';
+import {apiUrl, filterData} from "./data";
+import Navbar from './components/Navbar';
+import Filter from './components/Filter';
+import Cards from './components/Cards';
+import Spinner from './components/Spinner';
+
 import './App.css';
 
-function App() {
+const App = () => {
+
+  const [courses, setCourses]  = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState(filterData[0].title)
+
+  async function fetchData() {
+    setLoading(true);
+      try {
+        const result = await fetch(apiUrl);
+        const output = await result.json();
+        // save data into a variable
+        setCourses(output.data)
+        // console.log(output);
+      }
+       catch (error) {
+        alert.error('Something went Wrong')
+      }
+      setLoading(false);
+    }
+
+    useEffect ( () =>{
+      fetchData();
+    }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <Navbar/>
+
+     <Filter 
+      filterData= {filterData} 
+      category={category} 
+      setCategory={setCategory}/>
+
+     <div>
+        
+         { loading ? (<Spinner/>) : (<Cards courses={courses} category={category}/>)}
+        
+     </div>
     </div>
   );
 }

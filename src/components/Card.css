@@ -1,0 +1,23 @@
+.card{
+    width: 340px;
+    height: 430px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: darkgrey;
+    border-radius: 8px;
+}
+.img{
+    border-radius: 8px;
+
+}
+
+.desc{
+    text-align: left;
+    padding-left: 9px;
+}
+.h{
+    text-align: left;
+    padding-left: 9px;
+}
